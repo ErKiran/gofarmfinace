@@ -7,7 +7,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+
+	ut "github.com/go-playground/universal-translator"
 )
+
+var trans ut.Translator
 
 func BindAndValid(c *gin.Context, form interface{}) []string {
 	err := c.ShouldBind(form)

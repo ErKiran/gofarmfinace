@@ -18,7 +18,7 @@ type Response struct {
 }
 
 func (g *Gin) Response(code uint8, data interface{}, err ...string) {
-	httpCode, message := codes.GetMsg()
+	httpCode, message := codes.GetMsg(code)
 	g.C.JSON(httpCode, Response{
 		Msg:    message,
 		Errors: err,

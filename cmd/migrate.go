@@ -1,6 +1,7 @@
 package main
 
 import (
+	"farmfinance/models"
 	"fmt"
 	"log"
 	"os"
@@ -34,5 +35,12 @@ func main() {
 		panic(err)
 	}
 
-	db.Debug()
+	db.Exec("create type transaction_type as enum('DEBIT','CREDIT'); ")
+
+	db.Debug().AutoMigrate(&models.Crop{}, &models.Farm{}, &models.Ledger{})
+
+	db.Model(&models.Ledger{}).AddForeignKey("crop_id", "crops(id)", "CASCADE", "CASCADE")
+
+	db.Model(&models.Crop{}).AddForeignKey("farm_id", "farms(id)", "CASCADE", "CASCADE")
+
 }
