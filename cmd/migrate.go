@@ -37,10 +37,12 @@ func main() {
 
 	db.Exec("create type transaction_type as enum('DEBIT','CREDIT'); ")
 
-	db.Debug().AutoMigrate(&models.Crop{}, &models.Farm{}, &models.Ledger{})
+	db.Debug().AutoMigrate(&models.Crop{}, &models.Farm{}, &models.Ledger{}, &models.FarmType{})
 
 	db.Model(&models.Ledger{}).AddForeignKey("crop_id", "crops(id)", "CASCADE", "CASCADE")
 
 	db.Model(&models.Crop{}).AddForeignKey("farm_id", "farms(id)", "CASCADE", "CASCADE")
+
+	db.Model(&models.Farm{}).AddForeignKey("farm_type_id", "farm_types(id)", "CASCADE", "CASCADE")
 
 }
